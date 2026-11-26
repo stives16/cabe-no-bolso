@@ -1,0 +1,41 @@
+@startuml
+class Planejamento {
+ -participantes: Map<Integer, Participante>
+ -despesas: List<Despesa>
+ +adicionarParticipante(p)
+ +adicionarDespesa(d)
+ +totalIndividual(codigo): BigDecimal
+ +custoTotal(): BigDecimal
+ +situacao(codigo): String
+}
+class Participante {
+ -codigo: int
+ -nome: String
+ -orcamento: BigDecimal
+ +setNome(nome)
+ +setOrcamento(valor)
+}
+abstract class Despesa {
+ -descricao: String
+ -valor: BigDecimal
+ -codigosParticipantes: List<Integer>
+ {abstract} +calcularCota(codigo): BigDecimal
+}
+class DespesaFixa
+class DespesaPorPessoa
+interface Persistencia {
+ +salvar(planejamento)
+ +carregar(): Planejamento
+}
+class ArquivoPersistencia
+class PlanejamentoController
+class TelaPrincipal
+Despesa <|-- DespesaFixa
+Despesa <|-- DespesaPorPessoa
+Planejamento "1" o-- "*" Participante
+Planejamento "1" o-- "*" Despesa
+Persistencia <|.. ArquivoPersistencia
+PlanejamentoController --> Planejamento
+PlanejamentoController --> Persistencia
+TelaPrincipal --> PlanejamentoController
+@enduml
